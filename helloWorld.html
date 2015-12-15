@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H5 API sample</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+<body>
+subscription key<input id="key"></input>
+gamertag<input id="gamertag"></input>
+
+<button id="profileBtn">Get Profile</button>
+<script type="text/javascript">
+$('#profileBtn').on('click', getProfile);
+var getProfile = function() {
+    var gamertag = $('#gamertag').val();
+    var key = $('key').val();
+    if(gamertag && key) {
+        $.ajax({
+            url: "https://www.haloapi.com/stats/h5/players/" + gamertag + "/matches",
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", key);
+            },
+            type: "GET",
+            // Request body
+            data: "{body}"
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }
+}
+</script>
+</body>
+</html>
